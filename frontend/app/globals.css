@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+/*
+ * NetPilot AI — Design Tokens
+ * Canonical source: DESIGN_SYSTEM.md
+ *
+ * This is the ONLY file in the codebase that contains raw color values.
+ * All components consume Tailwind utilities generated from the @theme block below.
+ * See DESIGN_SYSTEM.md §13 (Token Consumption Rules).
+ */
+
+/* Enable class-based dark mode driven by next-themes (.dark on <html>). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ----------------------------------------------------------------------------
+ * Light theme (default)
+ * DESIGN_SYSTEM.md §1.1 + §1.3 + §1.4 + §1.5
+ * -------------------------------------------------------------------------- */
+:root {
+  /* Neutrals — Tailwind Slate family */
+  --background: #f8fafc; /* slate-50  — app canvas */
+  --surface: #ffffff; /*            — sidebar, top bar, panels */
+  --card: #ffffff; /*            — data containers */
+  --elevated: #ffffff; /*            — popovers, modals (paired with shadow-md) */
+  --border: #e2e8f0; /* slate-200  — default dividers */
+  --border-strong: #cbd5e1; /* slate-300  — emphasized dividers */
+  --text: #0f172a; /* slate-900  — primary text */
+  --text-secondary: #475569; /* slate-600  — secondary text */
+  --text-muted: #94a3b8; /* slate-400  — tertiary / placeholder */
+
+  /* Brand — blue */
+  --primary: #2563eb; /* blue-600 */
+  --primary-hover: #1d4ed8; /* blue-700 */
+  --primary-active: #1e40af; /* blue-800 */
+  --primary-subtle: rgba(37, 99, 235, 0.1); /* selected row, active nav, AI tint */
+  --on-primary: #ffffff; /* text/icon on primary fills */
+
+  /* Interaction */
+  --hover-overlay: rgba(15, 23, 42, 0.04); /* slate-900 @ 4% */
+
+  /* Status — fixed hue family, never decorative */
+  --healthy: #16a34a; /* green-600 */
+  --warning: #f59e0b; /* amber-500 */
+  --critical: #dc2626; /* red-600 */
+  --info: #2563eb; /* blue-600 — informational */
+  --unknown: #94a3b8; /* slate-400 */
+}
+
+/* ----------------------------------------------------------------------------
+ * Dark theme
+ * DESIGN_SYSTEM.md §1.2 + §1.3 + §1.4 + §1.5
+ * Applied by next-themes via the .dark class on <html>.
+ * -------------------------------------------------------------------------- */
+.dark {
+  /* Neutrals — inverted */
+  --background: #0f172a; /* slate-900 */
+  --surface: #1e293b; /* slate-800 */
+  --card: #1e293b; /* slate-800 */
+  --elevated: #334155; /* slate-700 (paired with shadow-lg) */
+  --border: #334155; /* slate-700 */
+  --border-strong: #475569; /* slate-600 */
+  --text: #f1f5f9; /* slate-100 */
+  --text-secondary: #94a3b8; /* slate-400 */
+  --text-muted: #64748b; /* slate-500 */
+
+  /* Brand — blue, brightened for dark surfaces */
+  --primary: #3b82f6; /* blue-500 */
+  --primary-hover: #2563eb; /* blue-600 */
+  --primary-active: #1d4ed8; /* blue-700 */
+  --primary-subtle: rgba(59, 130, 246, 0.16);
+  --on-primary: #ffffff;
+
+  /* Interaction */
+  --hover-overlay: rgba(255, 255, 255, 0.06);
+
+  /* Status — brightened for dark surfaces */
+  --healthy: #22c55e; /* green-500 */
+  --warning: #fbbf24; /* amber-400 */
+  --critical: #ef4444; /* red-500 */
+  --info: #3b82f6; /* blue-500 */
+  --unknown: #64748b; /* slate-500 */
+}
+
+/* ----------------------------------------------------------------------------
+ * Tailwind theme mapping
+ * Exposes every token as a Tailwind utility (bg-surface, text-text-secondary,
+ * border-border-strong, etc.) so components never reference raw values.
+ * DESIGN_SYSTEM.md §3 (spacing), §4 (radius), §2 (typography).
+ * -------------------------------------------------------------------------- */
+@theme inline {
+  /* Colors */
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-elevated: var(--elevated);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-primary-subtle: var(--primary-subtle);
+  --color-on-primary: var(--on-primary);
+
+  --color-hover-overlay: var(--hover-overlay);
+
+  --color-healthy: var(--healthy);
+  --color-warning: var(--warning);
+  --color-critical: var(--critical);
+  --color-info: var(--info);
+  --color-unknown: var(--unknown);
+
+  /* Fonts — wired to the Geist variables set by next/font in layout.tsx */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Radius — DESIGN_SYSTEM.md §4 */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+}
+
+/* ----------------------------------------------------------------------------
+ * Base
+ * -------------------------------------------------------------------------- */
+body {
+  background: var(--background);
+  color: var(--text);
+  font-family: var(--font-sans);
+}
+
+/* Respect users who prefer reduced motion. DESIGN_SYSTEM.md §12. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
